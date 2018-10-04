@@ -38,7 +38,7 @@ if [ 1 ]
         rfkill unblock wifi
         rfkill unblock wlan
         echo "Iniciando Firewall..."
-        /home/pi/RobcomSetup/firewall.sh
+        /home/pi/RobcomDrinkingMachine/firewall.sh
         sleep 2
         echo "Iniciando hostapd..."
         service hostapd stop  #As vezes host apd nao liga por conta do unblock wifi

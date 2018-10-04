@@ -12,7 +12,7 @@ import pigpio
 pi = None
 
 #############Portas GPIO##############
-led1 = 4
+led1 = 17
 led2 = 27
 led3 = 22
 ######################################
@@ -35,7 +35,7 @@ def exceptionLogger(code, function, line_number, exc):
     exc = str(exc).replace(')','\)').replace('(','\(').replace('>','\>').replace('<','\<').replace(';','\;').replace('"','\\"').replace("'","\\'")
     time = datetime.now().strftime("%H:%M:%S")
     mes_dia_ano = datetime.now().strftime("%b %d %Y")
-    syscall("echo {0} {1} {2} {3} line:{4}: {5} >> /home/pi/RobcomSetup/{6}".format(mes_dia_ano, time, code, function, line_number, exc, log_file))
+    syscall("echo {0} {1} {2} {3} line:{4}: {5} >> /home/pi/RobcomDrinkingMachine/{6}".format(mes_dia_ano, time, code, function, line_number, exc, log_file))
 
 def gpioConfig():
     print("Configurando GPIO...")
@@ -61,30 +61,26 @@ def drinkMaker():
     global led1
     global led2
     global led3
-    state = 0
-    if state == 0:
-        print("entrou na ledStateChange")
-       # if(drinkID == 1):
-        pi.write(led1, 1)
-        pi.write(led2, 1)
-       	pi.write(led3, 1)
-        time.sleep(1)
-       # elif(drinkID == 2):
-        pi.write(led1, 0)
-        pi.write(led2, 0)
-        pi.write(led3, 0)
-        time.sleep(1)
-        pi.write(led1, 1)
-        pi.write(led2, 1)
-       	pi.write(led3, 1)
-        time.sleep(1)
-        pi.write(led1, 0)
-        pi.write(led2, 0)
-       	pi.write(led3, 0)
-        time.sleep(1)
-        return
-    else:
-        return
+    print("entrou na drinkMaker")
+    # if(drinkID == 1):
+    pi.write(led1, 1)
+    pi.write(led2, 1)
+    pi.write(led3, 1)
+    time.sleep(1)
+    # elif(drinkID == 2):
+    pi.write(led1, 0)
+    pi.write(led2, 0)
+    pi.write(led3, 0)
+    time.sleep(1)
+    pi.write(led1, 1)
+    pi.write(led2, 1)
+    pi.write(led3, 1)
+    time.sleep(1)
+    pi.write(led1, 0)
+    pi.write(led2, 0)
+    pi.write(led3, 0)
+    time.sleep(1)
+    return
 #---------------FLASK FUNCTIONS---------------
 app = Flask(__name__)
 
@@ -119,10 +115,10 @@ def socketSender(): #sincrona
 
 
 if __name__ == "__main__":
-    print('Robcom iniciado!')
+    print('Robcom iniciado.')
     try:
         gpioConfig()
-        print("Testando Leds...")
+        print("Testando acionamento...")
         pi.write(led1, 1)
         pi.write(led2, 1)
         pi.write(led3, 1)
@@ -130,10 +126,10 @@ if __name__ == "__main__":
         pi.write(led1, 0)
         pi.write(led2, 0)
         pi.write(led3, 0)
-        print("OK!")
-       #app.debug = True
+        print("Teste de acionamento finalizado.")
+        #app.debug = True
         app.run(host='192.168.25.1', port=80)
-        print("OK")
+        print("Executando...")
         #app.run()
     except Exception as exc:
         print("TEVE EXCESSAO: {0}".format(exc))

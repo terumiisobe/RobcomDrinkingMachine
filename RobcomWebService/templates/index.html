@@ -62,16 +62,13 @@
 
     
     function checkForm(drink) {
-    //var input_mesa = document.getElementById('input-mesa').value();
-    //alert(input_mesa)
-        alert("Requisicao enviada")
+    var input_mesa = document.getElementById('input-mesa').value;
         try{
             $.ajax({
                 url : "/drinkRequest", // the endpoint
                 type : "POST", // http method
-                data : {'tableID':"12", 'drinkID':"1"},
+                data : {'tableID':input_mesa, 'drinkID':drink},
                 success : function(data) {
-                    alert("DEU BOA");
                     alert(data);
                     data = JSON.parse(data);
                     //console.log(data);
@@ -144,18 +141,22 @@
                             instruções de como habilitar o JavaScript no seu navegador</a>.
                             </div>
                         </noscript>
-                        
                         <form onsubmit="return checkForm();"> <!-- Função JS que verificará dos dados do formulário -->
+                            <br>
                             <div id="form" class="box-formulario" style="padding: 0 15px;">
                                 <div class="box-input">
                                     <label class="titulo-input" for="input-mesa">Numero da mesa:</label>
-                                    <input type="number" class="input input-mesa" id="input-mesa" name="input-mesa" required min="1" max="99" maxlength='2' placeholder="">
+                                    <input type="number" class="input input-mesa" id="input-mesa" name="input-mesa" min="1" max="99">
                                 </div>
-                                <br><br>
+                                
                                 <div class="form-group" style="text-align: center;">
                                     <input class="btn btn-primary btn_confirmar" type="button-confirm" onClick="return checkForm(1)" value= "Sex on the Beach">
-				    <button class="btn btn-primary btn_confirmar" type="button-confirm" onClick="return checkForm(2)" value= "Disco Voador">Disco Voador</button>
                                 </div>
+                                
+                                <div style="text-align: center;">
+				    <input class="btn btn-primary btn_confirmar" type="button-confirm" onClick="return checkForm(2)" value= "Disco Voador">
+                                </div>
+                                <br>
                             </div>
                         </form>
                     </div>
