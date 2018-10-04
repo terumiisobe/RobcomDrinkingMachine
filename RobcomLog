@@ -1,0 +1,37 @@
+Sep 25 2018 13:36:06 flaskAPIBridge.py main line:92: [Errno 99] Cannot assign requested address
+Sep 25 2018 13:36:27 flaskAPIBridge.py main line:93: [Errno 99] Cannot assign requested address
+Sep 25 2018 15:14:29 flaskAPIBridge.py main line:113: [Errno 99] Cannot assign requested address
+Sep 25 2018 21:44:53 flaskAPIBridge.py socketSender line:119: the JSON object must be str, not 'dict'
+Sep 25 2018 21:46:32 flaskAPIBridge.py socketSender line:119: the JSON object must be str, not 'dict'
+Sep 25 2018 21:49:38 flaskAPIBridge.py socketSender line:119: the JSON object must be str, not 'dict'
+Sep 30 2018 19:08:09 flaskAPIBridge.py main line:130: [Errno 98] Address already in use
+Sep 30 2018 19:20:00 flaskAPIBridge.py main line:130: [Errno 98] Address already in use
+Sep 30 2018 19:25:05 flaskAPIBridge.py main line:131: [Errno 98] Address already in use
+Sep 30 2018 19:26:42 flaskAPIBridge.py main line:131: [Errno 99] Cannot assign requested address
+Sep 30 2018 19:27:06 flaskAPIBridge.py main line:131: [Errno 98] Address already in use
+Sep 30 2018 19:30:32 flaskAPIBridge.py main line:131: [Errno 98] Address already in use
+Sep 30 2018 19:31:13 flaskAPIBridge.py main line:131: [Errno 98] Address already in use
+Sep 30 2018 19:33:01 flaskAPIBridge.py main line:131: [Errno 98] Address already in use
+Sep 30 2018 19:49:47 flaskAPIBridge.py main line:131: [Errno 98] Address already in use
+Sep 30 2018 19:51:34 flaskAPIBridge.py socketSender line:108: name 'p1' is not defined
+Sep 30 2018 19:55:33 flaskAPIBridge.py socketSender line:108: name 'p1' is not defined
+Sep 30 2018 19:57:05 flaskAPIBridge.py socketSender line:108: name 'p1' is not defined
+Sep 30 2018 19:58:18 flaskAPIBridge.py socketSender line:108: name 'p1' is not defined
+Sep 30 2018 20:01:08 flaskAPIBridge.py socketSender line:108: name 'p1' is not defined
+Sep 30 2018 20:02:26 flaskAPIBridge.py socketSender line:108: name 'p1' is not defined
+Sep 30 2018 20:05:25 flaskAPIBridge.py socketSender line:110: name 'p1' is not defined
+Sep 30 2018 20:09:04 flaskAPIBridge.py socketSender line:110: Can't convert 'int' object to str implicitly
+Sep 30 2018 20:09:12 flaskAPIBridge.py socketSender line:110: Can't convert 'int' object to str implicitly
+Sep 30 2018 20:09:16 flaskAPIBridge.py socketSender line:110: Can't convert 'int' object to str implicitly
+Sep 30 2018 20:09:19 flaskAPIBridge.py socketSender line:110: Can't convert 'int' object to str implicitly
+Sep 30 2018 20:14:12 flaskAPIBridge.py socketSender line:110: Can't convert 'int' object to str implicitly
+Sep 30 2018 20:14:18 flaskAPIBridge.py socketSender line:110: Can't convert 'int' object to str implicitly
+Sep 30 2018 20:14:25 flaskAPIBridge.py socketSender line:110: Can't convert 'int' object to str implicitly
+Sep 30 2018 20:18:17 flaskAPIBridge.py socketSender line:110: Can't convert 'int' object to str implicitly
+Sep 30 2018 20:18:22 flaskAPIBridge.py socketSender line:110: Can't convert 'int' object to str implicitly
+Sep 30 2018 20:23:01 flaskAPIBridge.py socketSender line:110: Can't convert 'int' object to str implicitly
+Sep 30 2018 20:25:03 flaskAPIBridge.py socketSender line:110: Can't convert 'int' object to str implicitly
+Sep 30 2018 20:25:25 flaskAPIBridge.py socketSender line:110: Can't convert 'int' object to str implicitly
+Sep 30 2018 20:25:30 flaskAPIBridge.py socketSender line:110: Can't convert 'int' object to str implicitly
+Sep 30 2018 20:25:32 flaskAPIBridge.py socketSender line:110: Can't convert 'int' object to str implicitly
+Sep 30 2018 22:20:05 flaskAPIBridge.py main line:133: [Errno 98] Address already in use
