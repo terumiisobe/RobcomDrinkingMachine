@@ -16,7 +16,6 @@ led1 = 4
 led2 = 27
 led3 = 22
 ######################################
-state = 0
 
 def syscall(p_command):
     v_subProcess = subprocess.run(p_command, shell=True, executable='/bin/bash', stdout=subprocess.PIPE)
@@ -54,30 +53,35 @@ def gpioConfig():
         pi.set_mode(led2, pigpio.OUTPUT)
         pi.set_mode(led3, pigpio.OUTPUT)
     except Exception as exc:
+        print("TEVE EXCESSAO: {0}".format(exc))
         exceptionLogger("flaskAPIBridge.py", "gpioConfig", getframeinfo(currentframe()).lineno, exc)
-        print(exc)
 
-def ledStateChange(drinkID):
+def drinkMaker():
     global pi
     global led1
     global led2
     global led3
-    global state
-    print("entrou " + state)
+    state = 0
     if state == 0:
         print("entrou na ledStateChange")
-        state = 1
        # if(drinkID == 1):
-        p1.write(led1, 1)
-        pi.write(led2, 0)
+        pi.write(led1, 1)
+        pi.write(led2, 1)
        	pi.write(led3, 1)
         time.sleep(1)
        # elif(drinkID == 2):
-        pi.write(led1, 1)
+        pi.write(led1, 0)
         pi.write(led2, 0)
         pi.write(led3, 0)
         time.sleep(1)
-        state = 0
+        pi.write(led1, 1)
+        pi.write(led2, 1)
+       	pi.write(led3, 1)
+        time.sleep(1)
+        pi.write(led1, 0)
+        pi.write(led2, 0)
+       	pi.write(led3, 0)
+        time.sleep(1)
         return
     else:
         return
@@ -97,7 +101,7 @@ def socketSender(): #sincrona
             message = request.form.to_dict() #.decode()
             print(message['tableID'])
             print(message['drinkID'])
-            ledStateChange(message['drinkID'])
+            drinkMaker()
             #message = json.loads(message)
             print("\n\nReceived: {0}".format(message))
             server_response = json.dumps({"status": 1})
@@ -105,9 +109,12 @@ def socketSender(): #sincrona
             #return "teste", 200, {"Content-Type": "application/json"}
         else:
             server_response = {"status": -1}
-            return server_response, 500, {"Content-Type": "application/json"}
+            return json.dumps(server_response)
     except Exception as exc:
+        print("TEVE EXCESSAO: {0}".format(exc))
         exceptionLogger("flaskAPIBridge.py", "socketSender", getframeinfo(currentframe()).lineno, exc)
+        server_response = {"status": -1}
+        return json.dumps(server_response)
 #---------------------------------------------
 
 
@@ -129,6 +136,6 @@ if __name__ == "__main__":
         print("OK")
         #app.run()
     except Exception as exc:
-        print(exc)
+        print("TEVE EXCESSAO: {0}".format(exc))
         exceptionLogger("flaskAPIBridge.py", "main", getframeinfo(currentframe()).lineno, exc)
 
