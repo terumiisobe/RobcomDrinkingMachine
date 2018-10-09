@@ -1,113 +1,98 @@
 #!/usr/bin/python3
-import threading
 import time
 import json
-import subprocess
 from flask import Flask, request, render_template #pip3 install flask
-from urllib.parse import urlencode
 from inspect import currentframe, getframeinfo
 from datetime import datetime
 import threading
 import pigpio
+from robotProcessManager import RobotManager
+from syscall import syscall
+from exceptionLogger import exceptionLogger
+from testaGPIOs import gpioTest
 pi = None
 
 #############Portas GPIO##############
-led1 = 17
-led2 = 27
-led3 = 22
+#Bombas hidraulicas
+b1 = 17  #Pino 11
+b2 = 27  #Pino 13
+b3 = 22  #Pino 15
+#Led 1 só informando que está ligado
+led1 = 18   #Pino 12
+#Servo motores
+servo1 = 12  #Pino 32
+servo2 = 13  #Pino 33
 ######################################
-
-def syscall(p_command):
-    v_subProcess = subprocess.run(p_command, shell=True, executable='/bin/bash', stdout=subprocess.PIPE)
-    return v_subProcess.stdout.decode('utf-8').split('\n')[:-1]
-
-try:
-    #-------------------------------------------------------------------------
-    #LOG system
-    log_file = "RobcomLog"
-    print ("Log_file = %s"%(log_file))
-    #-------------------------------------------------------------------------
-except Exception as exc:
-    print("Error in mac or log_file")
-    
-def exceptionLogger(code, function, line_number, exc):
-    global v_macEth0
-    exc = str(exc).replace(')','\)').replace('(','\(').replace('>','\>').replace('<','\<').replace(';','\;').replace('"','\\"').replace("'","\\'")
-    time = datetime.now().strftime("%H:%M:%S")
-    mes_dia_ano = datetime.now().strftime("%b %d %Y")
-    syscall("echo {0} {1} {2} {3} line:{4}: {5} >> /home/pi/RobcomDrinkingMachine/{6}".format(mes_dia_ano, time, code, function, line_number, exc, log_file))
+robotManager = RobotManager()
+gpioTester = gpioTest()
 
 def gpioConfig():
+    '''
+    Configura os modos das GPIO da raspberry pi B
+    '''
     print("Configurando GPIO...")
     try:
         global pi
         pi = pigpio.pi()
         if not pi.connected:
             print("Erro ao conectar GPIO.")
-
-        ##Setup##
-        #Inputs
-        
         #Outputs
+        pi.set_mode(b1, pigpio.OUTPUT)
+        pi.set_mode(b2, pigpio.OUTPUT)
+        pi.set_mode(b3, pigpio.OUTPUT)
         pi.set_mode(led1, pigpio.OUTPUT)
-        pi.set_mode(led2, pigpio.OUTPUT)
-        pi.set_mode(led3, pigpio.OUTPUT)
+        pi.set_mode(servo1, pigpio.OUTPUT)
+        pi.set_mode(servo2, pigpio.OUTPUT)
+        print("  OK")
+
     except Exception as exc:
-        print("TEVE EXCESSAO: {0}".format(exc))
+        print("TEVE EXCECAO: {0}".format(exc))
         exceptionLogger("flaskAPIBridge.py", "gpioConfig", getframeinfo(currentframe()).lineno, exc)
 
-def drinkMaker():
-    global pi
-    global led1
-    global led2
-    global led3
-    print("entrou na drinkMaker")
-    # if(drinkID == 1):
-    pi.write(led1, 1)
-    pi.write(led2, 1)
-    pi.write(led3, 1)
-    time.sleep(1)
-    # elif(drinkID == 2):
-    pi.write(led1, 0)
-    pi.write(led2, 0)
-    pi.write(led3, 0)
-    time.sleep(1)
-    pi.write(led1, 1)
-    pi.write(led2, 1)
-    pi.write(led3, 1)
-    time.sleep(1)
-    pi.write(led1, 0)
-    pi.write(led2, 0)
-    pi.write(led3, 0)
-    time.sleep(1)
-    return
+
 #---------------FLASK FUNCTIONS---------------
 app = Flask(__name__)
 
 @app.route('/')
 @app.route('/index')
 def index():
+    '''
+    Pagina base do sistema de pedidos Robcom
+    '''
     return render_template('index.html', title='Robçom Menu')
 
+#Rota para redirecionar após realizar o pedido
+#@app.route('/thanks!')
+#def index():
+'''
+Pagina de agradecimento apos um cliente fazer um pedido/acompanhamento do estado de seu pedidos (uma ideia seria retornar para o usuário o tempo medio 
+esperado para chegar o pedido dele, que pode-se calcular pela posição da fila que ele foi inserido)
+'''
+#    return render_template('thanks.html')
+
 @app.route("/drinkRequest", methods=["POST"])
-def socketSender(): #sincrona
+def socketSender():
+    '''
+    Rota para o front-end trocar dados com o back-end através da pagina /index.html
+    '''
     print('Requisicao recebida no socketSender')
     try:
         if request.method == "POST":
             message = request.form.to_dict() #.decode()
-            print(message['tableID'])
-            print(message['drinkID'])
-            drinkMaker()
-            #message = json.loads(message)
+            
+            tableID = message['tableID'] #
+            drinkID = message['drinkID'] #
+            
+            retorno = robotManager.drinkQueueAdd(tableID, drinkID)
+            
             print("\n\nReceived: {0}".format(message))
-            server_response = json.dumps({"status": 1})
+            server_response = json.dumps({"status": retorno})
             return server_response
-            #return "teste", 200, {"Content-Type": "application/json"}
         else:
             server_response = {"status": -1}
             return json.dumps(server_response)
     except Exception as exc:
-        print("TEVE EXCESSAO: {0}".format(exc))
+        print("TEVE EXCECAO: {0}".format(exc))
         exceptionLogger("flaskAPIBridge.py", "socketSender", getframeinfo(currentframe()).lineno, exc)
         server_response = {"status": -1}
         return json.dumps(server_response)
@@ -115,23 +100,23 @@ def socketSender(): #sincrona
 
 
 if __name__ == "__main__":
-    print('Robcom iniciado.')
+    '''
+    main do sistema
+    '''
+    print('Iniciando Robcom...')
     try:
         gpioConfig()
-        print("Testando acionamento...")
-        pi.write(led1, 1)
-        pi.write(led2, 1)
-        pi.write(led3, 1)
-        time.sleep(1)
-        pi.write(led1, 0)
-        pi.write(led2, 0)
-        pi.write(led3, 0)
-        print("Teste de acionamento finalizado.")
+        gpioTester.testaTodasGPIOs(pi)
         #app.debug = True
+        print("  Ligando Flask Web Service...")
         app.run(host='192.168.25.1', port=80)
-        print("Executando...")
-        #app.run()
+        print("   -OK")
+        print("  Ligando serviço de comunicação bluetooth com Robcom...")
+        robcomDrinkMakerThread = threading.Thread(target=robotManager.robcomDrinkMaker, args=(pi))
+        robcomDrinkMakerThread.start()
+        print("   -OK")
+        print(" -OK")
     except Exception as exc:
-        print("TEVE EXCESSAO: {0}".format(exc))
+        print("TEVE EXCECAO: {0}".format(exc))
         exceptionLogger("flaskAPIBridge.py", "main", getframeinfo(currentframe()).lineno, exc)
 
