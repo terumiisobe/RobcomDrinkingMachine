@@ -10,6 +10,7 @@ from robotProcessManager import RobotManager
 from syscall import syscall
 from exceptionLogger import exceptionLogger
 from testaGPIOs import gpioTest
+
 pi = None
 
 #############Portas GPIO##############
@@ -23,8 +24,6 @@ led1 = 18   #Pino 12
 servo1 = 12  #Pino 32
 servo2 = 13  #Pino 33
 ######################################
-robotManager = RobotManager()
-gpioTester = gpioTest()
 
 def gpioConfig():
     '''
@@ -44,7 +43,7 @@ def gpioConfig():
         pi.set_mode(servo1, pigpio.OUTPUT)
         pi.set_mode(servo2, pigpio.OUTPUT)
         print("  OK")
-
+        return pi
     except Exception as exc:
         print("TEVE EXCECAO: {0}".format(exc))
         exceptionLogger("flaskAPIBridge.py", "gpioConfig", getframeinfo(currentframe()).lineno, exc)
@@ -79,7 +78,7 @@ def socketSender():
     try:
         if request.method == "POST":
             message = request.form.to_dict() #.decode()
-            
+            print (message)
             tableID = message['tableID'] #
             drinkID = message['drinkID'] #
             
@@ -105,15 +104,18 @@ if __name__ == "__main__":
     '''
     print('Iniciando Robcom...')
     try:
-        gpioConfig()
+        pi = gpioConfig()
+        robotManager = RobotManager(pi)
+        gpioTester = gpioTest()
         gpioTester.testaTodasGPIOs(pi)
+
         #app.debug = True
+        print("  Ligando serviço de comunicação bluetooth com Robcom...")
+        robcomDrinkMakerThread = threading.Thread(target=robotManager.robcomDrinkMaker, args=())
+        robcomDrinkMakerThread.start()
+        print("   -OK")
         print("  Ligando Flask Web Service...")
         app.run(host='192.168.25.1', port=80)
-        print("   -OK")
-        print("  Ligando serviço de comunicação bluetooth com Robcom...")
-        robcomDrinkMakerThread = threading.Thread(target=robotManager.robcomDrinkMaker, args=(pi))
-        robcomDrinkMakerThread.start()
         print("   -OK")
         print(" -OK")
     except Exception as exc:

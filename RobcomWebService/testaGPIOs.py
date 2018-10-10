@@ -21,7 +21,6 @@ servo2 = 13  #Pino 33
 ######################################
 
 class gpioTest():
-    @staticmethod
     def testaLed(self, pi):
         print("  Testando Led...")
         pi.write(led1, 1)
@@ -29,7 +28,6 @@ class gpioTest():
         pi.write(led1, 0)
         print("   -OK")
 
-    @staticmethod
     def testaBombas(self, pi):
         print("  Testando bombas hidraulicas...")
         pi.write(b1, 1)
@@ -40,7 +38,7 @@ class gpioTest():
         pi.write(b2, 0)
         pi.write(b3, 0)
         print("   -OK")
-    @staticmethod
+
     def testaStepMotors(self, pi):
         print("  Testando Servos...")
         # Zera a posição dos dois servos
@@ -60,9 +58,9 @@ class gpioTest():
         time.sleep(2)
         print("   -OK")
 
-    @staticmethod
     def testaTodasGPIOs(self, pi):
         try:
+            print("teste")
             self.testaLed(pi)
             self.testaBombas(pi)
             self.testaStepMotors(pi)

@@ -18,75 +18,76 @@ servo2 = 13  #Pino 33
 ######################################
 
 class HydraulicPump():
-    @staticmethod
-    def drinkMaker(self, pi, drinkID):
+    def __init__(self, pi):
+        self.pi = pi
+
+    def drinkMaker(self, drinkID):
         try:
-            if drinkID == 1: #Sex on the beach
+            if drinkID == "1": #Sex on the beach
                 #100
                 #010
                 #001
                 #000
-                pi.write(b1, 1)
-                pi.write(b2, 0)
-                pi.write(b3, 0)
+                self.pi.write(b1, 1)
+                self.pi.write(b2, 0)
+                self.pi.write(b3, 0)
                 time.sleep(1)
-                pi.write(b1, 0)
-                pi.write(b2, 1)
-                pi.write(b3, 0)
+                self.pi.write(b1, 0)
+                self.pi.write(b2, 1)
+                self.pi.write(b3, 0)
                 time.sleep(1)
-                pi.write(b1, 0)
-                pi.write(b2, 0)
-                pi.write(b3, 1)
+                self.pi.write(b1, 0)
+                self.pi.write(b2, 0)
+                self.pi.write(b3, 1)
                 time.sleep(1)
-                pi.write(b1, 0)
-                pi.write(b2, 0)
-                pi.write(b3, 0)
+                self.pi.write(b1, 0)
+                self.pi.write(b2, 0)
+                self.pi.write(b3, 0)
                 time.sleep(1)
 
-            if drinkID == 2: #Cuba Libre
+            if drinkID == "2": #Cuba Libre
                 #111
                 #000
                 #111
                 #000
-                pi.write(b1, 1)
-                pi.write(b2, 1)
-                pi.write(b3, 1)
+                self.pi.write(b1, 1)
+                self.pi.write(b2, 1)
+                self.pi.write(b3, 1)
                 time.sleep(1)
-                pi.write(b1, 0)
-                pi.write(b2, 0)
-                pi.write(b3, 0)
+                self.pi.write(b1, 0)
+                self.pi.write(b2, 0)
+                self.pi.write(b3, 0)
                 time.sleep(1)
-                pi.write(b1, 1)
-                pi.write(b2, 1)
-                pi.write(b3, 1)
+                self.pi.write(b1, 1)
+                self.pi.write(b2, 1)
+                self.pi.write(b3, 1)
                 time.sleep(1)
-                pi.write(b1, 0)
-                pi.write(b2, 0)
-                pi.write(b3, 0)
+                self.pi.write(b1, 0)
+                self.pi.write(b2, 0)
+                self.pi.write(b3, 0)
                 time.sleep(1)
-            if drinkID == 3: #Jakubits
+            if drinkID == "3": #Jakubits
                 #110
                 #011
                 #010
                 #000
-                pi.write(b1, 1)
-                pi.write(b2, 1)
-                pi.write(b3, 0)
+                self.pi.write(b1, 1)
+                self.pi.write(b2, 1)
+                self.pi.write(b3, 0)
                 time.sleep(1)
-                pi.write(b1, 0)
-                pi.write(b2, 1)
-                pi.write(b3, 1)
+                self.pi.write(b1, 0)
+                self.pi.write(b2, 1)
+                self.pi.write(b3, 1)
                 time.sleep(1)
-                pi.write(b1, 0)
-                pi.write(b2, 1)
-                pi.write(b3, 0)
+                self.pi.write(b1, 0)
+                self.pi.write(b2, 1)
+                self.pi.write(b3, 0)
                 time.sleep(1)
-                pi.write(b1, 0)
-                pi.write(b2, 0)
-                pi.write(b3, 0)
+                self.pi.write(b1, 0)
+                self.pi.write(b2, 0)
+                self.pi.write(b3, 0)
                 time.sleep(1)
         except Exception as exc:
             exceptionLogger("hidraulicPumpHandler.py", "drinkMaker", getframeinfo(currentframe()).lineno, exc)
             print (exc)
             return -1
-        

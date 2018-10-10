@@ -20,8 +20,10 @@ servo2 = 13  #Pino 33
 ######################################
 
 class ServoControl():
-    @staticmethod
-    def retiraUmCopo(self, pi):
+    def __init__(self, pi):
+        self.pi = pi
+
+    def retiraUmCopo(self):
         """
         Move ambos servos de forma a retirar um copo do dispenser
         param:pi: gpio controler
@@ -33,19 +35,19 @@ class ServoControl():
         # 2000 # spin fast clockwise
         try:
             # Zera a posição dos dois servos
-            pi.set_servo_pulsewidth(servo1, 1000)
-            pi.set_servo_pulsewidth(servo2, 2000)
+            self.pi.set_servo_pulsewidth(servo1, 1000)
+            self.pi.set_servo_pulsewidth(servo2, 2000)
             time.sleep(1)
             # roda lentamente ambos servos, o 1 no sentido horario e o 2 no anti-horario
             # Movimento completo dura 4 segundos
             for i in range(0, 800, 20):
-                pi.set_servo_pulsewidth(servo1, 1000 + i)
-                pi.set_servo_pulsewidth(servo2, 2000 - i)
+                self.pi.set_servo_pulsewidth(servo1, 1000 + i)
+                self.pi.set_servo_pulsewidth(servo2, 2000 - i)
                 time.sleep(0.1)
             time.sleep(1)
             # Zera posição dos dois servos
-            pi.set_servo_pulsewidth(servo1, 1000)
-            pi.set_servo_pulsewidth(servo2, 2000)
+            self.pi.set_servo_pulsewidth(servo1, 1000)
+            self.pi.set_servo_pulsewidth(servo2, 2000)
             time.sleep(2)
         except Exception as exc:
             exceptionLogger("servoControl.py", "removeUmCopo", getframeinfo(currentframe()).lineno, exc)

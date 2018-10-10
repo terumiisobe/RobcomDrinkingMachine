@@ -25,11 +25,13 @@ servo2 = 13  #Pino 33
 ######################################
 
 class RobotManager():
-    requestsQueue = DrinkQueue()
-    pumpHandler = HydraulicPump()
-    servoControler = ServoControl()
-    @staticmethod
-    def robcomDrinkMaker(self, pi):
+    def __init__(self, pi):
+        self.pi = pi
+        self.requestsQueue = DrinkQueue()
+        self.pumpHandler = HydraulicPump(self.pi)
+        self.servoControler = ServoControl(self.pi)
+
+    def robcomDrinkMaker(self):
         '''
         Administra a função de preparo de drinks e pop na fila de pedidos
         param: pi: gpio controler
@@ -42,9 +44,11 @@ class RobotManager():
                 #TODO!
                 #Dar pop na fila de drinks, caso não haja pedidos na fila, o sistema fica parado aqui
                 tableToDeliver, drinkToMake = self.requestsQueue.pop()
-                pi.write(led1, 1)
+                print("Iniciando preparação de drink")
+                self.pi.write(led1, 1)
                 #Deposita copo (aciona função para enviar um copo)
-                self.servoControler.retiraUmCopo(pi)
+                print("Retirando um copo")
+                self.servoControler.retiraUmCopo()
                 #Informa ao carro de que o copo foi enviado
                 #TODO
                 #Aguarda confirmação do carro de que recebeu copo (Segue ideia de um TCP pra prevenção de erros)
@@ -52,28 +56,27 @@ class RobotManager():
                 #Aguarda dado de que o carrinho está sob as bombas hidraulicas
                 #TODO
                 #Executar as bombas hidraulicas de acordo com o drink desejado
-                self.pumpHandler.drinkMaker(pi, drinkToMake)
+                print("Preparando drink {0}".format(drinkToMake))
+                self.pumpHandler.drinkMaker(drinkToMake)
                 #Enviar dado ao carrinho que ele já pode entregar o drink para a mesa "tableID" definida pelo cliente
                 #TODO
+                print("Drink Pronto!!!")
                 for i in range(3):
-                    pi.write(led1, 1)
+                    self.pi.write(led1, 1)
                     time.sleep(0.5)
-                    pi.write(led1, 0)
+                    self.pi.write(led1, 0)
                     time.sleep(0.5)
-                pi.write(led1, 0)
+                self.pi.write(led1, 0)
                 time.sleep(10)
-            
         except Exception as exc:
             exceptionLogger("robotProcessManager.py", "robcomDrinkMaker", getframeinfo(currentframe()).lineno, exc)
             print(exc)
-            
-    @staticmethod
+
     def drinkQueueAdd(self, tableID, drinkID):
         '''
         Insere um pedido feito no cardápio na fila de pedidos
         '''
         try:
-            global pi
             return self.requestsQueue.push(tableID, drinkID)
         except Exception as exc:
             exceptionLogger("robotProcessManager.py", "drinkQueueAdd", getframeinfo(currentframe()).lineno, exc)

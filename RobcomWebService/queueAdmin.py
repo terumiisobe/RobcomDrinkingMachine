@@ -7,13 +7,14 @@ import time
 
 class DrinkQueue():
     queue = []
-    @staticmethod
+    
     def push(self, tableID, drinkID):
         '''
         adiciona elemento json na fila na ultima posição
         '''
         try:
             data = json.dumps({'tableID': tableID, 'drinkID':drinkID})
+            #print("push de {0}".format(data))
             self.queue = self.queue + [data] #insere elemento no fim da queue
             self.printQueue()
             return 1
@@ -28,11 +29,12 @@ class DrinkQueue():
         '''
         try:
             while len(self.queue) == 0:
+                #print("Fila vazia!")
                 time.sleep(5)
-
+            #print("Fila recebeu dado: {0}".format(self.queue))
             data = self.queue[0]
             data = json.loads(data)
-            print(data)
+            #print(data)
             self.queue = self.queue[1:] #Remove o elemento 0 da queue
             return data['tableID'], data['drinkID']
         except Exception as exc:
