@@ -31,9 +31,17 @@ class gpioTest():
     def testaBombas(self, pi):
         print("  Testando bombas hidraulicas...")
         pi.write(b1, 1)
+        pi.write(b2, 0)
+        pi.write(b3, 0)
+        time.sleep(0.1)
+        pi.write(b1, 0)
         pi.write(b2, 1)
+        pi.write(b3, 0)
+        time.sleep(0.1)
+        pi.write(b1, 0)
+        pi.write(b2, 0)
         pi.write(b3, 1)
-        time.sleep(1)
+        time.sleep(0.1)
         pi.write(b1, 0)
         pi.write(b2, 0)
         pi.write(b3, 0)
@@ -43,18 +51,18 @@ class gpioTest():
         print("  Testando Servos...")
         # Zera a posição dos dois servos
         pi.set_servo_pulsewidth(servo1, 1000)
-        pi.set_servo_pulsewidth(servo2, 2000)
+        pi.set_servo_pulsewidth(servo2, 2080)
         time.sleep(1)
         # roda lentamente ambos servos, o 1 no sentido horario e o 2 no anti-horario
         # Movimento completo dura 4 segundos
         for i in range(0, 800, 20):
             pi.set_servo_pulsewidth(servo1, 1000 + i)
-            pi.set_servo_pulsewidth(servo2, 2000 - i)
+            pi.set_servo_pulsewidth(servo2, 2080 - i)
             time.sleep(0.1)
         time.sleep(1)
         # Zera posição dos dois servos
         pi.set_servo_pulsewidth(servo1, 1000)
-        pi.set_servo_pulsewidth(servo2, 2000)
+        pi.set_servo_pulsewidth(servo2, 2080)
         time.sleep(2)
         print("   -OK")
 

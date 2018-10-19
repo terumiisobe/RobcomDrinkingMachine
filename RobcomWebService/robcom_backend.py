@@ -106,8 +106,9 @@ if __name__ == "__main__":
     try:
         pi = gpioConfig()
         robotManager = RobotManager(pi)
-        gpioTester = gpioTest()
-        gpioTester.testaTodasGPIOs(pi)
+        #gpioTester = gpioTest()
+        #gpioTester.testaTodasGPIOs(pi)
+        #gpioTester.testaTodasGPIOs(pi)
 
         #app.debug = True
         print("  Ligando serviço de comunicação bluetooth com Robcom...")
@@ -115,7 +116,7 @@ if __name__ == "__main__":
         robcomDrinkMakerThread.start()
         print("   -OK")
         print("  Ligando Flask Web Service...")
-        app.run(host='192.168.25.1', port=80)
+        app.run(host='192.168.241.1', port=80)
         print("   -OK")
         print(" -OK")
     except Exception as exc:

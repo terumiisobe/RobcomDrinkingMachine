@@ -17,7 +17,7 @@ if [ 1 ]
         service network-manager restart
         ifconfig $MAC_WLAN down
         sleep 1
-        ifconfig $MAC_WLAN 192.168.25.1/24 up
+        ifconfig $MAC_WLAN 192.168.241.1/24 up
 
         killall hostapd
         killall dnsmasq

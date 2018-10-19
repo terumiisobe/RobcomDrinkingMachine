@@ -40,7 +40,7 @@ class ServoControl():
             time.sleep(1)
             # roda lentamente ambos servos, o 1 no sentido horario e o 2 no anti-horario
             # Movimento completo dura 4 segundos
-            for i in range(0, 800, 20):
+            for i in range(0, 1000, 20):
                 self.pi.set_servo_pulsewidth(servo1, 1000 + i)
                 self.pi.set_servo_pulsewidth(servo2, 2000 - i)
                 time.sleep(0.1)
