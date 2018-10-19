@@ -48,7 +48,7 @@ class ServoControl():
             # Zera posição dos dois servos
             self.pi.set_servo_pulsewidth(servo1, 1000)
             self.pi.set_servo_pulsewidth(servo2, 2000)
-            time.sleep(2)
+            time.sleep(4)
         except Exception as exc:
             exceptionLogger("servoControl.py", "removeUmCopo", getframeinfo(currentframe()).lineno, exc)
             print(exc)
