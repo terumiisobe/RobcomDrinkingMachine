@@ -1,0 +1,49 @@
+/* CSS da página web do Robçom */
+/*
+- adicionar background
+- mudar codigo cores
+*/
+
+body{
+  background-color: red;
+}
+
+.input-text{
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 17px;
+  font-weight: regular;
+  color: white;
+}
+
+.input-box{
+  width: 280px;
+  font-size: 20px;
+  padding-top: 10px;
+  background-color: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+}
+
+.input-box:focus{
+  border-bottom-color: blue;
+}
+
+.button-confirm{
+  background: green;
+  color: white;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: bold;
+  font-size: 22px;
+  margin-top: 80px;
+  margin-left: 100px;
+  padding: 10px;
+  size: 180px;
+}
+
+.button-confirm:focus{
+  background: green;
+  size:
+}
