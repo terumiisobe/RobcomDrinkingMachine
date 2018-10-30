@@ -4,35 +4,37 @@
 - mudar codigo cores
 */
 
-body{
-  background-color: red;
+.login-screen{
+  background-image: url("robcomBack.png");
+  background-size: cover;
 }
 
-.input-text{
+.text{
   font-family: 'Ubuntu', sans-serif;
   font-size: 17px;
   font-weight: regular;
-  color: white;
+  color: #fdf0c5;
 }
 
 .input-box{
   width: 280px;
   font-size: 20px;
+  color: #fdf0c5;
   padding-top: 10px;
   background-color: transparent;
   border-top: none;
   border-left: none;
   border-right: none;
   border-bottom-width: 3px;
-  border-bottom-color: black;
+  border-bottom-color: #fef6de;
 }
 
 .input-box:focus{
-  border-bottom-color: blue;
+  border-bottom-color: #c65d2c;
 }
 
 .button-confirm{
-  background: green;
+  background: #c65d2c;
   color: white;
   font-family: 'Ubuntu', sans-serif;
   font-weight: bold;
@@ -40,10 +42,48 @@ body{
   margin-top: 80px;
   margin-left: 100px;
   padding: 10px;
-  size: 180px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
-.button-confirm:focus{
-  background: green;
-  size:
+.button-confirm:hover{
+  background: #b15327;
+}
+
+/* button */
+
+.list-screen{
+  background-image: url("robcomBack-notitle.png");
+}
+
+.listing{
+  align-items: center;
+  margin-top: 70px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.btn-drinks{
+  width: 160px;
+  height: 150px;
+  background-color: #fdf0c5;
+  border: 0px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  color: black;
+  cursor: pointer; /* Pointer/hand icon */
+}
+
+.btn-drinks:hover{
+  width: 163px;
+  height: 153px;
+  background-color: #fef6de;
+}
+
+.btn-informacao{
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 17px;
+  font-weight: regular;
+  color: black;
+
 }
