@@ -1,7 +1,5 @@
 /* CSS da página web do Robçom */
 /*
-- adicionar background
-- mudar codigo cores
 */
 
 .login-screen{
@@ -50,40 +48,46 @@
   background: #b15327;
 }
 
-/* button */
+/* Opções dá página de drinks */
 
-.list-screen{
+.list-background{
   background-image: url("robcomBack-notitle.png");
 }
-
+.list-title{
+  margin-left: 25px;
+  color: #fed700;
+}
 .listing{
   align-items: center;
   margin-top: 70px;
-  margin-left: 20px;
+  margin-left: 25px;
   margin-bottom: 20px;
 }
 
 .btn-drinks{
   width: 160px;
   height: 150px;
-  background-color: #fdf0c5;
+  background-color: #fed700;
   border: 0px;
-  margin-right: 5px;
   margin-bottom: 5px;
-  color: black;
+  color: white;
   cursor: pointer; /* Pointer/hand icon */
 }
 
-.btn-drinks:hover{
+/*.btn-drinks:hover{
   width: 163px;
   height: 153px;
   background-color: #fef6de;
-}
+}*/
 
 .btn-informacao{
   font-family: 'Ubuntu', sans-serif;
   font-size: 17px;
   font-weight: regular;
-  color: black;
+  color: white;
+}
 
+.border_example{
+  border-style: solid;
+  border-color: green;
 }
