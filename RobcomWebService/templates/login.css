@@ -8,10 +8,10 @@
 }
 
 .text{
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Calibri' sans-serif;
   font-size: 17px;
   font-weight: regular;
-  color: #fdf0c5;
+  color: #fedf00;
 }
 
 .input-box{
@@ -54,40 +54,56 @@
   background-image: url("robcomBack-notitle.png");
 }
 .list-title{
+  font-family: 'Ubuntu', sans-serif;
   margin-left: 25px;
   color: #fed700;
 }
 .listing{
   align-items: center;
   margin-top: 70px;
-  margin-left: 25px;
+  margin-left: 16px;
   margin-bottom: 20px;
 }
 
 .btn-drinks{
   width: 160px;
   height: 150px;
-  background-color: #fed700;
+  background-color: #fdf0c5;
   border: 0px;
+  border-radius: 5px;
   margin-bottom: 5px;
-  color: white;
+  margin-top: 5px;
+  margin-left: 3px;
+  margin-right: 3px;
+  font-size: 20px;
   cursor: pointer; /* Pointer/hand icon */
 }
 
-/*.btn-drinks:hover{
-  width: 163px;
-  height: 153px;
-  background-color: #fef6de;
-}*/
+.btn-drinks:hover{
+  /* adjust so it won't affect other buttons */
+  margin-top: 2px;
+  margin-bottom: 2px;
+  margin-left: 0px;
+  margin-right: 0px;
+  /* enlarges button size when hovering*/
+  width: 166px;
+  height: 155px;
 
-.btn-informacao{
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 17px;
-  font-weight: regular;
-  color: white;
+  background-color: #fef6de;
+  font-size: 22px;
 }
 
-.border_example{
+.btn-informacao{
+  padding-top: 5px;
+  font-family: 'Ubuntu', sans-serif;
+  color: #800000;
+}
+
+.border-example{
+  padding: 4px;
+  border-width: thin;
+  border-radius: 25px;
   border-style: solid;
-  border-color: green;
+  border-color: #e13300;
+  font-size:
 }
