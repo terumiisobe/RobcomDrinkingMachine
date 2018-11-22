@@ -7,11 +7,16 @@
 
 /* classe usada por todas as páginas pra centralizar conteúdo */
 .centered{
-  position: fixed;
-  top: 20%;
+  position: absolute;
+  top: 30%;
   left: 50%;
-  margin-top:-110px;
+  margin-top:-150px;
   margin-left: -160px;
+}
+
+body{
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 /* ----------------------- */
@@ -40,7 +45,6 @@
   border-right: none;
   border-bottom-width: 2px;
   border-bottom-color: #c65d2c;
-
 }
 
 .input-box:focus{
@@ -84,6 +88,7 @@
   align-items: center;
   margin-top: 130px;
   margin-bottom: 20px;
+  position: relative;
 }
 
 /* botão para selecionar drink */
@@ -147,9 +152,10 @@
   padding-right: 30px;
   border-radius: 30px;
   border-color: transparent;
+  position: relative;
+  z-index: 100;
 }
 
 .button-back:hover{
   background: #b15327;
 }
-.
