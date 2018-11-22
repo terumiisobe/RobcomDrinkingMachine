@@ -7,6 +7,8 @@ echo ""
 #echo "   arp_block processes:"
 #ps aux | grep arp_block| grep python
 echo ""
+service nginx status
+service gunicorn status
 service dnsmasq status
 service hostapd status
 

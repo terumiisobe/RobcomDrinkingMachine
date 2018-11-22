@@ -14,7 +14,6 @@ if [ 1 ]
 
         service networking restart
         rfkill unblock wlan
-        service network-manager restart
         ifconfig $MAC_WLAN down
         sleep 1
         ifconfig $MAC_WLAN 192.168.241.1/24 up
@@ -22,9 +21,9 @@ if [ 1 ]
         killall hostapd
         killall dnsmasq
 
-        echo "Iniciando sistemas principais..."
+        echo "->Iniciando sistemas principais..."
         #echo "ok."
-        echo "Iniciando dnsmasq..."
+        echo "-->Iniciando dnsmasq..."
         sleep 1
         service dnsmasq start
         while [ $? == 1 ]; do #1 == FAIL
@@ -34,24 +33,41 @@ if [ 1 ]
             service dnsmasq start
         done
         echo "ok."
-        echo "Unbloking wifi e wlan..."
+        echo "-->Unbloking wifi e wlan..."
         rfkill unblock wifi
         rfkill unblock wlan
-        echo "Iniciando Firewall..."
+        echo "-->Iniciando Firewall..."
         /home/pi/RobcomDrinkingMachine/firewall.sh
         sleep 2
-        echo "Iniciando hostapd..."
+        echo "-->Iniciando hostapd..."
+        ifconfig wlan1 down
         service hostapd stop  #As vezes host apd nao liga por conta do unblock wifi
-        service wpa_supplicant stop
-        sleep 3
+        sleep 8
         service hostapd start
         sleep 1
-        #service gunicorn stop
+	echo "-->Iniciando nginx..."
+        service nginx stop
         sleep 3
-        #service gunicorn start
+        service nginx start
+        sleep 3
+	echo "-->Iniciando gunicorn..."
+        service gunicorn stop
+        sleep 3
+        service gunicorn start
+	echo "-->Iniciando bluetooth..."
+        service bluetooth stop
+        sleep 3
+        service bluetooth start
         sleep 1
+        hciconfig hci0 up
+        sleep 2
+        for i in $(pgrep rfcomm); do kill $i; done;
+        for i in $(pgrep bluetooth_conn); do kill $i; done;
+        sleep 1
+        ./bluetooth_connect.sh &
+        sleep 3
         echo ""
-        echo "Robson is Alive!!!"
+        echo " ---> Robson is Alive!!!"
         #Guarda data de quando esse programa rodou
         #echo 0 > /root/info/lock
         #echo 0 > /root/info/forced_unlock

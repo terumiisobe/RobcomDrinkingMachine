@@ -1,0 +1,155 @@
+/* CSS da página web do Robçom */
+
+/* contem a imagem de fundo vermelha */
+.background{
+  background-image: url("../images/plain.png");
+}
+
+/* classe usada por todas as páginas pra centralizar conteúdo */
+.centered{
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  margin-top:-110px;
+  margin-left: -160px;
+}
+
+/* ----------------------- */
+/*         login           */
+/* ----------------------- */
+
+/* textos legenda dos input boxes */
+.text{
+  font-family: 'Lucida Sans Unicode' sans-serif;
+  font-size: 17px;
+  color: #fdf0c5;
+  margin-left: 25px;
+  margin-top: 25px;
+}
+
+/* box de input das informações de login: Nome, Número da mesa */
+.input-box{
+  width: 210px;
+  font-family: 'Lucida Sans Unicode' sans-serif;
+  font-size: 20px;
+  color: #fdf0c5;
+  margin-left: 25px;
+  background-color: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #c65d2c;
+
+}
+
+.input-box:focus{
+  border-bottom-color: #fdf0c5;
+}
+
+/* botão de confirmar Bora */
+.button-confirm{
+  background: #800000;
+  color: #fdf0c5;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: bold;
+  font-size: 22px;
+  margin-top: 70px;
+  margin-left: 100px;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 30px;
+  border-color: transparent;
+}
+
+.button-confirm:hover{
+  background: #b15327;
+}
+
+/* ----------------------- */
+/*       drinklist         */
+/* ----------------------- */
+
+/* imagem com título da página drinklist */
+.list-title{
+  background-image: url("../images/listTitle.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: fixed;
+}
+
+/* bloco para agrupar as opções de drinks */
+.listing{
+  align-items: center;
+  margin-top: 130px;
+  margin-bottom: 20px;
+}
+
+/* botão para selecionar drink */
+.btn-drinks{
+  width: 160px;
+  height: 150px;
+  background-color: #fdf0c5;
+  border: 0px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  margin-right: 6px;
+  font-size: 20px;
+  cursor: pointer; /* Pointer/hand icon */
+}
+
+.btn-drinks:hover{
+  /* ajuste para não afetar outros botões */
+  margin-top: -2px;
+  margin-bottom: -2px;
+  margin-right: 0px;
+  /* aumenta o tamanho do botão */
+  width: 166px;
+  height: 156px;
+  background-color: #fef6de;
+  font-size: 23px;
+}
+
+/* caracteristicas do texto dentro do botão */
+.btn-informacao{
+  padding-top: 5px;
+  font-family: 'Ubuntu', sans-serif;
+  color: #800000;
+}
+
+/* borda do conteúdo do drink */
+.border-example{
+  padding: 4px;
+  border-width: thin;
+  border-radius: 25px;
+  border-style: solid;
+  border-color: #e13300;
+  font-size: 10px;
+}
+
+/* ----------------------- */
+/*       waiting           */
+/* ----------------------- */
+
+/* botão de confirmar Bora */
+.button-back{
+  background: #800000;
+  color: #fdf0c5;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+  margin-top: 20px;
+  margin-left: 100px;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 30px;
+  border-color: transparent;
+}
+
+.button-back:hover{
+  background: #b15327;
+}
+.

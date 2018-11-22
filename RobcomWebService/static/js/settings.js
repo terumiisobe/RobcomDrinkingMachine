@@ -1,3 +1,0 @@
-WEBSOCKET_PORTS = {
-    HOTSPOT: 2000
-};

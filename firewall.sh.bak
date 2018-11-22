@@ -36,9 +36,27 @@ iptables -P FORWARD ACCEPT
 /sbin/modprobe x_tables
 /sbin/modprobe nf_nat_pptp
 
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -p tcp --dport 67 -j ACCEPT
+iptables -A INPUT -p udp --dport 67 -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p udp --dport 22 -j ACCEPT
+#=================DNS=========================
+iptables -A FORWARD -p tcp --dport 53 -j ACCEPT
+iptables -A FORWARD -p udp --dport 53 -j ACCEPT
+iptables -A INPUT -p tcp --dport 53 -j ACCEPT
+iptables -A INPUT -p udp --dport 53 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 53 -j ACCEPT
+iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
+#=============================================
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p udp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+iptables -A INPUT -p udp --dport 443 -j ACCEPT
+
 # Habilita o roteamento no kernel #
 echo 1 > /proc/sys/net/ipv4/ip_forward
-
+#DESKTOP-LGRFTVN.hotspot  ether   5c:c9:d3:7d:11:62
 #iptables -t nat -A PREROUTING -i $IFACE_LAN -p udp -m udp --dport 53 -j DNAT --to-destination 8.8.8.8
 #iptables -t nat -A PREROUTING -i $IFACE_LAN -p tcp -m tcp --dport 53 -j DNAT --to-destination 8.8.8.8
 #iptables -t nat -A PREROUTING -i $IFACE_LAN -p udp -m udp --dport 53 -j DNAT --to-destination 8.8.4.4
@@ -46,13 +64,8 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 #iptables -t mangle -I PREROUTING 1 -m mac --mac-source  -j MARK --set-mark 99
 #iptables -t mangle -I PREROUTING 1 -m mac --mac-source 5c:c9:d3:7d:11:62 -j MARK --set-mark 99
 
-#iptables -t nat -A INPUT -i $IFACE_LAN -p tcp -m tcp --dport 80  -d form.connectywifi.com.br -j ACCEPT
-#iptables -t nat -A INPUT -i $IFACE_LAN -p tcp -m tcp --dport 443  -d form.connectywifi.com.br -j ACCEPT
-#Nao funciona...
-#iptables -t nat -A FORWARD -i $IFACE_LAN -p tcp -m tcp --dport 80  -d form.connectywifi.com.br -j ACCEPT
-#iptables -t nat -A FORWARD -i $IFACE_LAN -p tcp -m tcp --dport 443  -d form.connectywifi.com.br -j ACCEPT
-#iptables -t nat -A PREROUTING -i $IFACE_LAN -p tcp -m tcp --dport 80  -d form.connectywifi.com.br -j ACCEPT
-#iptables -t nat -A PREROUTING -i $IFACE_LAN -p tcp -m tcp --dport 443  -d form.connectywifi.com.br -j ACCEPT
+iptables -t nat -A PREROUTING -i $IFACE_LAN -p tcp -m tcp --dport 80  -d form.connectywifi.com.br -j RETURN
+iptables -t nat -A PREROUTING -i $IFACE_LAN -p tcp -m tcp --dport 443  -d form.connectywifi.com.br -j RETURN
 
 iptables -t nat -A PREROUTING -i $IFACE_LAN -p udp -m udp --dport 80 -m mark ! --mark 0x63 -j DNAT --to-destination 192.168.241.1:80
 iptables -t nat -A PREROUTING -i $IFACE_LAN -p udp -m udp --dport 443 -m mark ! --mark 0x63 -j DNAT --to-destination 192.168.241.1:443
@@ -62,10 +75,9 @@ iptables -t nat -A PREROUTING -i $IFACE_LAN -p tcp -m tcp --dport 443 -m mark ! 
 ###########################################################
 #Bloqueio dos sites e aplicativos para usuários deslogados#
 ###########################################################
-iptables -A FORWARD -m mark --mark 0x63 -j ACCEPT
-iptables -A FORWARD -m mark --mark 0x62 -j ACCEPT
-#Ligando essa regra buga o captive
-#iptables -A FORWARD -i $IFACE_LAN -j DROP
+#iptables -A FORWARD -m mark --mark 0x63 -j ACCEPT
+#iptables -A FORWARD -m mark --mark 0x62 -j ACCEPT
+iptables -A FORWARD -i $IFACE_LAN -j DROP
 
 iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT

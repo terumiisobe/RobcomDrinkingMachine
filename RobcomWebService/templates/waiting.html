@@ -40,11 +40,11 @@ $.ajaxSetup({
      }
 });
 
+tableID = {{table}};
 
-function checkForm() {
-    var input_mesa = document.getElementById('mesa').value;
-    window.location.href = "https://form.connectywifi.com.br/tableAndName?tableID="+input_mesa;
-  //  window.location.href = "tableAndName?tableID="+input_mesa;
+function toDrinkList() {
+    window.location.href = "https://form.connectywifi.com.br/tableAndName?tableID="+tableID;
+ //   window.location.href = "tableAndName?tableID="+tableID;
 };
 /**
  * Executed on page load.
@@ -55,28 +55,18 @@ $(document).ready(function() {
 </script>
 
 <html lang="pt-br">
-  <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-    <link href="{{ url_for('static', filename='css/OpenSans.css') }}" rel='stylesheet'  type='text/css'>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+        <link href="{{ url_for('static', filename='css/OpenSans.css') }}" rel='stylesheet'  type='text/css'>
 <!--    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'  type='text/css'> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  </head>
-  <body class="background">
-    <div class="centered">
-          <img style="width: 300px; height: auto; margin-top: 20%; margin-left: 4%;" src="{{ url_for('static', filename='images/logo.png') }}" alt="logoRobcom">
-
-          <div style="margin-top: 40px; margin-left: 25px;">
-              <label class="text">Nome</label><br>
-              <input id="nome" type="text" class="input-box"><br>
-
-              <label class="text" >Número da mesa</label><br>
-              <input id="mesa" type="number" class="input-box">
-          </div>
-
-          <div>
-            <input type="button" value="Bora" class="button-confirm" onclick="return checkForm()">
-          </div>
-    </div>
-  </body>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    </head>
+    <body class="background">
+        <div class="centered">
+            <img style="width: 300px; height: auto; margin-top: 40%; margin-left: 20px;" src="{{ url_for('static', filename='images/waitTitle.png') }}" alt="TituloWaiting"><br>
+            <input type="button" class="button-back" value="Voltar" onclick="return toDrinkList()"><br>
+            <img style="width: 250px; height: auto; position: fixed; bottom: 0px; margin-left: 45px;" src="{{ url_for('static', filename='images/cheerscup.png') }}" alt="Cheers">
+        </div>
+    </body>
 </html>

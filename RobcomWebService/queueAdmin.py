@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# -*- coding: utf-8 -*-
 #Finished at: 08/10/2018
 import json
 from inspect import currentframe, getframeinfo

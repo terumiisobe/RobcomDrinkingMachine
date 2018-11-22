@@ -1,75 +1,127 @@
 <!DOCTYPE html>
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
 <!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
 <!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+<script>
+debug_const = 1;
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+     // these HTTP methods do not require CSRF protection
+     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+$.ajaxSetup({
+     beforeSend: function(xhr, settings) {
+         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+             xhr.setRequestHeader("X-CSRFToken", csrftoken);
+         }
+     }
+});
+
+tableID = {{table}};
+
+function checkForm(drink) {
+    window.location.href = "https://form.connectywifi.com.br/waiting?tableID="+tableID+"&drinkID="+drink;
+  //  window.location.href = "waiting?tableID="+tableID+"&drinkID="+drink;
+};
+/**
+ * Executed on page load.
+ */
+$(document).ready(function() {
+
+});
+</script>
+
 
 <html lang="pt-br">
   <head>
-    <link rel="stylesheet" href="login.css">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'  type='text/css'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link href="{{ url_for('static', filename='css/OpenSans.css') }}" rel='stylesheet'  type='text/css'>
+<!--    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'  type='text/css'> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   </head>
-  <body class="list-background">
-        <h1 class="list-title">Escolha seu Drink</h1>
+  <body class="background">
+      <div class="centered">
+        <div class="list-title">
+          <div class="listing">
+                      <button class="btn-drinks" onclick="return checkForm(1)">
+                        <div class="btn-informacao">
+                          <p style="font-weight: bold; margin-bottom: 1px;">Disco Voador</p>
+                          <p class="border-example" style="display: inline; font-size: 13px;">Vodka</p>
+                          <p class="border-example" style="display: inline; font-size: 13px;">Suco</p>
+                          <p style="margin-top: 10px; font-size: 17px;"> 8,9% Vol.<p/>
+                        </div>
+                      </button>
 
-        <div class="listing" >
+                      <button class="btn-drinks" onclick="return checkForm(2)">
+                        <div class="btn-informacao">
+                          <p style="font-weight: bold; margin-bottom: 1px;">Computaria</p>
+                          <p class="border-example" style="display: inline; font-size: 13px;">Vodka</p>
+                          <p class="border-example" style="display: inline; font-size: 13px;">Suco</p>
+                          <p class="border-example" style="display: inline; font-size: 13px;">Refri</p>
+                          <p style="margin-top: 10px; font-size: 17px;"> 10% Vol.<p/>
+                        </div>
+                      </button>
 
-          <button class="btn-drinks">
-            <div class="btn-informacao">
-              <p style="font-weight: bold; margin-bottom: 1px;">Disco Voador</p>
-              <p class="border-example" style="display: inline; font-size: 13px;">Vodka</p>
-              <p class="border-example" style="display: inline; font-size: 13px;">Suco</p>
-              <p class="btn-informacao" style="margin-top: 10px; font-size: 15px;"> 8,9%<p/>
-            </div>
-          </button>
+                      <br>
+                      <button class="btn-drinks" onclick="return checkForm(3)">
+                        <div class="btn-informacao">
+                          <p style="font-weight: bold; margin-bottom: 1px;">Neném</p>
+                          <p class="border-example" style="display: inline; font-size: 13px;">Suco</p>
+                          <p style="margin-top: 10px; font-size: 17px;"> 0% Vol.<p/>
+                        </div>
+                      </button>
 
-          <button class="btn-drinks">
-            <div class="btn-informacao">
-              <p style="font-weight: bold; margin-bottom: 1px;">Computaria</p>
-              <p class="border-example" style="display: inline; font-size: 13px;">Vodka</p>
-              <p class="border-example" style="display: inline; font-size: 13px;">Suco</p>
-              <p class="border-example" style="display: inline; font-size: 13px;">Gás</p>
-              <p class="btn-informacao" style="margin-top: 10px; font-size: 15px;"> 8,9%<p/>
-            </div>
-          </button>
+                      <button class="btn-drinks" onclick="return checkForm(4)">
+                        <div class="btn-informacao">
+                          <p style="font-weight: bold; margin-bottom: 1px;">Sem Graça</p>
+                          <p class="border-example" style="display: inline; font-size: 13px;">Refri</p>
+                          <p style="margin-top: 10px; font-size: 17px;"> 0% Vol.<p/>
+                        </div>
+                      </button>
 
-          <button class="btn-drinks">
-            <div class="btn-informacao">
-              <p style="font-weight: bold; margin-bottom: 1px;">Neném</p>
-              <p class="border-example" style="display: inline; font-size: 13px;">Suco</p>
-              <p class="btn-informacao" style="margin-top: 10px; font-size: 15px;"> 8,9%<p/>
-            </div>
-          </button>
+                      <br>
+                      <button class="btn-drinks" onclick="return checkForm(5)">
+                        <div class="btn-informacao">
+                          <p style="font-weight: bold; margin-bottom: 1px;">Morte</p>
+                          <p class="border-example" style="display: inline; font-size: 13px;">Vodka</p>
+                          <p style="margin-top: 10px; font-size: 17px;"> 36% Vol.<p/>
+                        </div>
+                      </button>
 
-          <button class="btn-drinks">
-            <div class="btn-informacao">
-              <p style="font-weight: bold; margin-bottom: 1px;">Sem Graça</p>
-              <p class="border-example" style="display: inline; font-size: 13px;">Água com gás</p>
-              <p class="btn-informacao" style="margin-top: 10px; font-size: 15px;"> 8,9%<p/>
-            </div>
-          </button>
-
-          <button class="btn-drinks">
-            <div class="btn-informacao">
-              <p style="font-weight: bold; margin-bottom: 1px;">Morte</p>
-              <p class="border-example" style="display: inline; font-size: 13px;">Vodka</p>
-              <p class="btn-informacao" style="margin-top: 10px; font-size: 15px;"> 8,9%<p/>
-            </div>
-          </button>
-
-          <button class="btn-drinks">
-            <div class="btn-informacao">
-              <p style="font-weight: bold; margin-bottom: 1px;">Refri fake</p>
-              <p class="border-example" style="display: inline; font-size: 13px;">Água com gás</p>
-              <p class="border-example" style="display: inline; font-size: 13px;">Suco</p>
-              <p class="btn-informacao" style="margin-top: 10px; font-size: 15px;"> 8,9%<p/>
-            </div>
-          </button>
-
+                      <button class="btn-drinks" onclick="return checkForm(6)">
+                        <div class="btn-informacao">
+                          <p style="font-weight: bold; margin-bottom: 1px;">Refri Fake</p>
+                          <p class="border-example" style="display: inline; font-size: 13px;">Vodka</p>
+                          <p class="border-example" style="display: inline; font-size: 13px;">Refri</p>
+                          <p style="margin-top: 10px; font-size: 17px;"> 0% Vol.<p/>
+                        </div>
+                      </button>
         </div>
+      </div>
+    </div>
   </body>
 </html>
