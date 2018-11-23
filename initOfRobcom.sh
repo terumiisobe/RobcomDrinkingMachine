@@ -64,7 +64,7 @@ if [ 1 ]
         for i in $(pgrep rfcomm); do kill $i; done;
         for i in $(pgrep bluetooth_conn); do kill $i; done;
         sleep 1
-        ./bluetooth_connect.sh &
+        /home/pi/RobcomDrinkingMachine/bluetooth_connect.sh &
         sleep 3
         echo ""
         echo " ---> Robson is Alive!!!"

@@ -57,7 +57,6 @@ class ServoControl():
                 self.pi.set_servo_pulsewidth(servo1, 1750 - i)
                 self.pi.set_servo_pulsewidth(servo2, 1460 + i)
                 time.sleep(0.1)
-                time.sleep(1)
             # Solta o dispenser com o servo 0
             self.pi.set_servo_pulsewidth(servo1, 1010)
             self.pi.set_servo_pulsewidth(servo2, 2210)

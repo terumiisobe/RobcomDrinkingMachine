@@ -49,41 +49,26 @@ class RobotManager():
                 # Aguarda dado do carrinho avisando que está sob o dispenser
                 print("Aguardando carro enviar 1 via bluetooth pra avisar que está sob o dispenser.")
                 self.bluetoothContr.receiveBluetooth("1")
-                # Dar pop na fila de drinks, caso não haja pedidos na fila, o sistema fica parado aqui
-                drinkToMake = 1
-                tableToDeliver = 8
-                #tableToDeliver, drinkToMake = self.requestsQueue.pop()
                 print("Iniciando preparação de drink")
                 #self.pi.write(led1, 1)
                 # Deposita copo (aciona função para enviar um copo)
                 print("Retirando um copo")
-                time.sleep(1)
-                #self.servoControler.retiraUmCopo()
+                #time.sleep(1)
+                self.servoControler.retiraUmCopo()
                 # Informa ao carro de que o copo foi enviado
                 # Aguarda confirmação do carro de que recebeu copo (Segue ideia de um TCP pra prevenção de erros)
                 self.bluetoothContr.sendBluetooth("2")
                 # Aguarda dado de que o carrinho está sob as bombas hidraulicas
                 self.bluetoothContr.receiveBluetooth("3")
                 # Executar as bombas hidraulicas de acordo com o drink desejado
+                # Dar pop na fila de drinks, caso não haja pedidos na fila, o sistema fica parado aqui
+                #drinkToMake = 1
+                #tableToDeliver = 8
+                tableToDeliver, drinkToMake = self.requestsQueue.pop()
                 print("Preparando drink {0}".format(drinkToMake))
-                self.pi.write(b1, 1)
-                self.pi.write(b2, 0)
-                self.pi.write(b3, 0)
-                time.sleep(0.5)
-                self.pi.write(b1, 0)
-                self.pi.write(b2, 1)
-                self.pi.write(b3, 0)
-                time.sleep(0.5)
-                self.pi.write(b1, 0)
-                self.pi.write(b2, 0)
-                self.pi.write(b3, 1)
-                time.sleep(0.5)
-                self.pi.write(b1, 0)
-                self.pi.write(b2, 0)
-                self.pi.write(b3, 0)
-                #time.sleep(10)
-                #self.pumpHandler.drinkMaker(drinkToMake)
+                self.pumpHandler.drinkMaker(drinkToMake)
                 # Enviar dado ao carrinho que ele já pode entregar o drink para a mesa "tableID" definida pelo cliente
+                time.sleep(5) #Tempo para deixar as bombas pingarem
                 self.bluetoothContr.sendBluetooth(tableToDeliver)
                 print("Drink Pronto!!!")
                 time.sleep(8)
