@@ -1,4 +1,4 @@
-\#!/bin/bash
+#!/bin/bash
 #Author: Lucas C. Tavano
 #Date: 06/01/2018
 echo ""
@@ -6,30 +6,23 @@ echo "--iniciando Robson--"
 
 if [ 1 ]
     then
-        echo "-->Iniciando antena interna..."
+        echo ""
+        echo "--Iniciando initBash--"
+        echo "Definindo interfaces de rede"
+        #Pega MAC do adaptador
         MAC_WLAN="wlan0"
+
         service networking restart
         rfkill unblock wlan
-        ifconfig wlan0 down
+        ifconfig $MAC_WLAN down
         sleep 1
-        ifconfig wlan0 up
-        echo "-->Conectando na internet..."
-        service wpa_supplicant stop
-        sleep 1
-        wpa_supplicant -Dnl80211 -iwlan0 -c/home/pi/RobcomDrinkingMachine/wpa.conf -B
-        sleep 1
-        dhclient wlan0
-        #iwconfig wlan0 essid Batwifi key s:segundaocaralho
-        #Configuração em /etc/network/interfaces
-        #sleep 1
-        #dhclient wlan0
-        echo "-->Iniciando antena externa..."
-        ifconfig wlan1 down
-        sleep 1
-        ifconfig wlan1 192.168.241.1/24 up
+        ifconfig $MAC_WLAN 192.168.241.1/24 up
 
         killall hostapd
         killall dnsmasq
+
+        echo "->Iniciando sistemas principais..."
+        #echo "ok."
         echo "-->Iniciando dnsmasq..."
         sleep 1
         service dnsmasq start
@@ -47,6 +40,7 @@ if [ 1 ]
         /home/pi/RobcomDrinkingMachine/firewall.sh
         sleep 2
         echo "-->Iniciando hostapd..."
+        ifconfig wlan1 down
         service hostapd stop  #As vezes host apd nao liga por conta do unblock wifi
         sleep 8
         service hostapd start
@@ -54,12 +48,12 @@ if [ 1 ]
 	echo "-->Iniciando nginx..."
         service nginx stop
         sleep 3
-        service nginx start
+     #   service nginx start
         sleep 3
 	echo "-->Iniciando gunicorn..."
         service gunicorn stop
         sleep 3
-        service gunicorn start
+    #    service gunicorn start
 	echo "-->Iniciando bluetooth..."
         service bluetooth stop
         sleep 3
@@ -72,7 +66,6 @@ if [ 1 ]
         sleep 1
         /home/pi/RobcomDrinkingMachine/bluetooth_connect.sh &
         sleep 3
-        #/home/pi/RobcomDrinkingMachine/RobcomWebService/RobcomWebService.py &
         echo ""
         echo " ---> Robson is Alive!!!"
         #Guarda data de quando esse programa rodou

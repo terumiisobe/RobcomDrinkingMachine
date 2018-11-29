@@ -43,7 +43,7 @@ class bluetoothControler():
                 bluetoothSerial = serial.Serial("/dev/rfcomm0", baudrate=9600, timeout=2)  # pode variar o rfcomm
                 bluetoothSerial.write(str(str_to_send).encode())
                 print("Enviado via blutooth: {0}".format(str_to_send))
-                return
+                return 1
             except Exception as exc:
                 print("TEVE EXCECAO: {0}".format(exc))
                 #exceptionLogger("bluetoothController.py", "sendBluetooth", getframeinfo(currentframe()).lineno, exc)
@@ -68,7 +68,10 @@ class bluetoothControler():
     def receiveBluetooth(self, data_expected):
         while 1:
             try:
+                copos_error=0
                 while(1):
+                    if copos_error==15:
+                        return 2
                     bluetoothSerial = serial.Serial("/dev/rfcomm0", baudrate=9600, timeout=2)
                     print("Aguardando...")
                     resposta = bluetoothSerial.readline()
@@ -76,18 +79,20 @@ class bluetoothControler():
                     print("Recebido via blutooth: {0}".format(resposta))
                     if (str(resposta) != data_expected ):
                         try:
+                            copos_error+=1
                             print("Dado errado recebido. Esperado: {0}, Recebido: {1}".format(data_expected, resposta))
                             self.sendBluetooth((int(data_expected)-1))
                         except Exception as exc:
                             print("TEVE EXCECAO: {0}".format(exc))
                     else:
-                        return
+                        return 1
             except Exception as exc:
                 print("TEVE EXCECAO: {0}".format(exc))
                 #exceptionLogger("bluetoothController.py", "sendBluetooth", getframeinfo(currentframe()).lineno, exc)
                 #syscall("for i in $(pgrep rfcomm); do kill $i; done;")
                 #syscall("for i in $(pgrep bluetooth_conn); do kill $i; done;")
                 time.sleep(3);
+                return 0
                 """
                 try:
                     try:

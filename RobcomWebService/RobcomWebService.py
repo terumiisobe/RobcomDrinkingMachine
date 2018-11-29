@@ -58,10 +58,6 @@ def gpioConfig():
         pi.set_servo_pulsewidth(servo1, 1010)
         pi.set_servo_pulsewidth(servo2, 2210)
         pi.set_servo_pulsewidth(servo0, 1900)
-        pi.write(b1, 1)
-        pi.write(b2, 1)
-        pi.write(b3, 1)
-        time.sleep(15)
         pi.write(b1, 0)
         pi.write(b2, 0)
         pi.write(b3, 0)
@@ -93,6 +89,12 @@ def tableAndName():
             #message = request.form.to_dict() #.decode()
             #tableID = message['tableID']
             tableID = request.args.get('tableID')
+            if tableID == "1":
+                tableID = "4"
+            if tableID == "2":
+                tableID = "6"
+            if tableID == "3":
+                tableID = "8"
             return render_template('drinklist.html', table=tableID)
         else:
             print("Request != get")
@@ -120,7 +122,7 @@ def waiting():
             if tableID == "1":
                 tableID = "4"
             if tableID == "2":
-                tableID = "4"
+                tableID = "6"
             if tableID == "3":
                 tableID = "8"
             retorno = robotManager.drinkQueueAdd(tableID, drinkID)
@@ -174,6 +176,8 @@ def main():
     main do sistema
     '''
     print('Iniciando Robcom...')
+    syscall("echo Iniciando Robcom... > /home/pi/RobcomDrinkingMachine/RobcomWebService/state")
+
     try:
         pi = gpioConfig()
         global robotManager

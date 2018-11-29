@@ -46,6 +46,7 @@ class RobotManager():
             # robcomDrinkMakerThread.start()
             while 1:
                 self.bluetoothContr.connectionChecker()
+                syscall("echo Checando conexao > /home/pi/RobcomDrinkingMachine/RobcomWebService/state")
                 # Aguarda dado do carrinho avisando que está sob o dispenser
                 print("Aguardando carro enviar 1 via bluetooth pra avisar que está sob o dispenser.")
                 self.bluetoothContr.receiveBluetooth("1")
@@ -59,11 +60,15 @@ class RobotManager():
                 # Aguarda confirmação do carro de que recebeu copo (Segue ideia de um TCP pra prevenção de erros)
                 self.bluetoothContr.sendBluetooth("2")
                 # Aguarda dado de que o carrinho está sob as bombas hidraulicas
-                self.bluetoothContr.receiveBluetooth("3")
+                while self.bluetoothContr.receiveBluetooth("3") == 2:
+                    self.servoControler.shakeYoAss()
+                    self.servoControler.retiraUmCopo()
+                    self.bluetoothContr.sendBluetooth("2")
+
                 # Executar as bombas hidraulicas de acordo com o drink desejado
                 # Dar pop na fila de drinks, caso não haja pedidos na fila, o sistema fica parado aqui
                 #drinkToMake = 1
-                #tableToDeliver = 8
+                #tableToDeliver = 6
                 tableToDeliver, drinkToMake = self.requestsQueue.pop()
                 print("Preparando drink {0}".format(drinkToMake))
                 self.pumpHandler.drinkMaker(drinkToMake)

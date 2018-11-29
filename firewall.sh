@@ -5,9 +5,11 @@
 #reviewed at: 26/06/2018                                                #
 #########################################################################
 # Interface de rede de output
-IFACE_WEB="eth0"
+#IFACE_WEB="eth0"
+IFACE_WEB="wlan0"
 # Interface de rede ligada a rede interna
-IFACE_LAN="wlan0"
+#IFACE_LAN="wlan0"
+IFACE_LAN="wlan1"
 IFACE_IP="192.168.241.1"
 
 function start() {
@@ -62,8 +64,8 @@ iptables -t nat -A PREROUTING -i $IFACE_LAN -p tcp -m tcp --dport 443 -m mark ! 
 ###########################################################
 #Bloqueio dos sites e aplicativos para usuários deslogados#
 ###########################################################
-iptables -A FORWARD -m mark --mark 0x63 -j ACCEPT
-iptables -A FORWARD -m mark --mark 0x62 -j ACCEPT
+#iptables -A FORWARD -m mark --mark 0x63 -j ACCEPT
+#iptables -A FORWARD -m mark --mark 0x62 -j ACCEPT
 #Ligando essa regra buga o captive
 #iptables -A FORWARD -i $IFACE_LAN -j DROP
 
