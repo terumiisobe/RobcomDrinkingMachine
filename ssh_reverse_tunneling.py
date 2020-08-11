@@ -17,7 +17,7 @@ try:
     connections = syscall("""netstat -natp | grep ESTABLISHED | grep ssh | grep -v tcp6""")
     #print (len(connections))
     if len(connections) <= 1:
-        syscall("""sshpass -p "mwn@1209" ssh -fN -o StrictHostKeyChecking=no -R 30001:localhost:22 root@vps0803.publiccloud.com.br &""")
+        syscall("""sshpass -p "PASSWORD" ssh -fN -o StrictHostKeyChecking=no -R 30001:localhost:22 root@ServerIP &""")
     else:
         #print("Connexãoes extrapoladas")
         sys.exit(0)
